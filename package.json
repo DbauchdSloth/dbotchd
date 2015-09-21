@@ -1,0 +1,24 @@
+{
+  "name": "dbotchd",
+  "version": "0.0.1",
+  "description": "DbauchdSloth's custom social media bot for Twitch, YouTube, Twitter, Steam, Battle.net, Teamspeak and Github",
+  "main": "index.js",
+  "dependencies": {
+    "jsonfile": "^2.2.2",
+    "tmi.js": "0.0.23"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DbauchdSloth/dbotchd.git"
+  },
+  "author": "dbauchdsloth@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DbauchdSloth/dbotchd/issues"
+  },
+  "homepage": "https://github.com/DbauchdSloth/dbotchd#readme"
+}
