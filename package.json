@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "jsonfile": "^2.2.2",
+    "lodash": "^3.10.1",
     "tmi.js": "0.0.23"
   },
   "devDependencies": {},

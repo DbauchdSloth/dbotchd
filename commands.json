@@ -1,0 +1,6 @@
+{
+  "commands": [
+    { "in": "!qotd",
+      "out": "\"When the going gets weird, the weird turn professional\". - Hunter S. Thomson" }
+  ]
+}
