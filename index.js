@@ -94,17 +94,22 @@ var getUsers = function() {
       obj = JSON.parse(body);
       total = obj._total;
       results = obj.follows;
-      var promise = q.when(obj);
+      var promise = q.when(obj._links.next);
       if (total > limit) {
           nextUrl = obj._links.next;
           console.log(nextUrl);
           for (var x = limit; x < total; x += limit) {
-            client.api({url: nextUrl}, function (err, res, body) {
-              if (err) { console.trace(err); }
-              obj = JSON.parse(body);
-              nextUrl = obj._links.next;
-              console.log(nextUrl);
-              results.concat(obj.follows);
+            promise = promise.then(function (nextUrl) {
+              var defer = q.defer();
+              client.api({url: nextUrl}, function (err, res, body) {
+                if (err) { return q.reject(err); }
+                obj = JSON.parse(body);
+                nextUrl = obj._links.next;
+                console.log(nextUrl);
+                results.concat(obj.follows);
+                defer.resolve(obj._links.next);
+              });
+              return defer.promise;
             });
           }
       }
