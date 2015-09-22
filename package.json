@@ -6,6 +6,7 @@
   "dependencies": {
     "jsonfile": "^2.2.2",
     "lodash": "^3.10.1",
+    "q": "^1.4.1",
     "tmi.js": "0.0.23"
   },
   "devDependencies": {},

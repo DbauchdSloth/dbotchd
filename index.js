@@ -1,11 +1,14 @@
 var _ = require("lodash");
 var tmi = require("tmi.js");
 var jsonfile = require('jsonfile');
-var defaultChannel = "#dbauchdsloth";
+var q = require("q");
+
+
+var channel = "dbauchdsloth";
 var commandRegex = /^!\w+/;
-var commands = [];
+//var commands = [];
 var client;
-var followers = [];
+var users = [];
 
 process.on("SIGINT", function() {
   console.log("closing [SIGNINT]");
@@ -14,23 +17,25 @@ process.on("SIGINT", function() {
 });
 
 var onConnecting = function (address, port) {
+  /*
   jsonfile.readFile("commands.json", function (err, defaultCommands) {
     if (err) {
       console.trace(err);
       process.exit();
     }
-    commands = defaultCommands.commands;
+    //commands = defaultCommands.commands;
   });
+  */
 };
 
 var onConnected = function (address, port) {
-  getFollowers(defaultChannel);
+  users = getUsers();
+  //console.log(users.length);
 };
 
 var onDisconnect = function (reason) {
 
 };
-
 
 /*
 
@@ -55,7 +60,7 @@ var onDisconnect = function (reason) {
 !game <string>
 
 */
-
+/*
 var getFollowers = function (channel) {
   var total = 0;
 
@@ -72,17 +77,56 @@ var getFollowers = function (channel) {
   });
   //TODO: loop until all followers are GET and pushed
 };
+*/
+
+
+var getUsers = function() {
+  var total = 0;
+  var limit = 10;
+  var nextUrl;
+  var baseUrl = "https://api.twitch.tv/kraken/channels/" + channel;
+  var apiUrl = baseUrl + "/follows?limit=" + limit;
+  var results = [];
+
+  client.api({ url: apiUrl },
+    function (err, res, body) {
+      if (err) { console.trace(err); }
+      obj = JSON.parse(body);
+      total = obj._total;
+      results = obj.follows;
+      var promise = q.when(obj);
+      if (total > limit) {
+          nextUrl = obj._links.next;
+          console.log(nextUrl);
+          for (var x = limit; x < total; x += limit) {
+            client.api({url: nextUrl}, function (err, res, body) {
+              if (err) { console.trace(err); }
+              obj = JSON.parse(body);
+              nextUrl = obj._links.next;
+              console.log(nextUrl);
+              results.concat(obj.follows);
+            });
+          }
+      }
+      //console.dir(results);
+      return results;
+  });
+};
+
 
 var onChat = function (channel, user, message, self) {
-  var results = commandRegex.exec(message);
+
+  //var results = commandRegex.exec(message);
+  /*
   if (results) {
     var command = results[0];
     console.dir(command);
     var out = _.result(_.find(commands, { "in": command }), "out");
     if (out) {
-      client.say(defaultChannel, out);
+      client.say("#" + channel, out);
     }
   }
+  */
 };
 
 jsonfile.readFile("config.json", function (err, opts) {
