@@ -22,8 +22,8 @@
     "dashboardPanels": [
       {
         "name": "dbotchd",
-        "title": "dbotchdashboard",
-        "width": 4,
+        "title": "#dbauchdsloth",
+        "width": 2,
         "headerColor": "#2d4e8a",
         "file": "index.html"
       }
