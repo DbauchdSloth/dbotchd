@@ -1,11 +1,11 @@
-var irc  = require('tmi.js');
 var fs   = require('fs');
 var argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const util = require('util');
 var express = require('express');
-var routes = require('./routes');
-var collections = require('./collections');
+
+var routes        = require('./routes');
+var collections   = require('./collections');
 var twitchService = require('./twitch-api');
 
 app = express();
