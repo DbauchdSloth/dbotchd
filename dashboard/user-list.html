@@ -1,0 +1,43 @@
+<link rel="import" href="components/polymer/polymer.html">
+<link rel="import" href="components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="components/iron-ajax/iron-ajax.html">
+<link rel="import" href="components/iron-list/iron-list.html">
+<link rel="import" href="components/iron-icon/iron-icon.html">
+<link rel="import" href="components/iron-icons/iron-icons.html">
+<link rel="import" href="components/iron-icons/social-icons.html">
+<link rel="import" href="components/paper-item/paper-item.html">
+<link rel="import" href="components/paper-listbox/paper-listbox.html">
+<link rel="import" href="components/paper-icon-button/paper-icon-button.html">
+
+
+<dom-module id="user-list">
+  <template is="dom-bind">
+    <style>
+      .big {
+        --iron-icon-height: 50px;
+        --iron-icon-width: 50px;
+      }
+    </style>
+    <iron-ajax url="http://localhost:9090/api/users/" last-response="{{data}}" auto></iron-ajax>
+    <paper-listbox>
+    <iron-list items="[[data]]" as="user">
+      <template>
+        <paper-icon-item>
+          <iron-icon class="big" src="[[user.logo]]" item-icon></iron-icon>
+          <paper-item-body two-line>
+            <a href="https://twitch.tv/[[user.display_name]]">[[user.display_name]]</a>
+            <!--<div secondary>[[user.bio]]</div>-->
+          </paper-item-body>
+          <paper-icon-button icon="star-border" alt="favourite this!">
+          </paper-icon-button>
+        </paper-icon-item>
+      </template>
+    </iron-list>
+    </paper-listbox>
+  </template>
+  <script>
+    Polymer({
+      is: "user-list"
+    });
+  </script>
+</dom-module>

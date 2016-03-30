@@ -1,26 +1,32 @@
 {
   "name": "dbotchd",
   "version": "0.0.1",
-  "description": "DbauchdSloth's custom social media bot for Twitch, YouTube, Twitter, Steam, Battle.net, Teamspeak and Github",
+  "description": "A debauched irc bot",
   "main": "index.js",
-  "dependencies": {
-    "jsonfile": "^2.2.2",
-    "lodash": "^3.10.1",
-    "q": "^1.4.1",
-    "tmi.js": "0.0.23"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DbauchdSloth/dbotchd.git"
-  },
   "author": "dbauchdsloth@gmail.com",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DbauchdSloth/dbotchd/issues"
+  "dependencies": {
+    "express": "^4.13.4",
+    "jsgraph": "^0.6.1",
+    "level": "^1.4.0",
+    "lokijs": "^1.3.16",
+    "minimist": "^1.2.0",
+    "request": "^2.69.0",
+    "tmi.js": "0.0.28"
   },
-  "homepage": "https://github.com/DbauchdSloth/dbotchd#readme"
+  "nodecg": {
+    "compatibleRange": "~0.7.0",
+    "dashboardPanels": [
+      {
+        "name": "dbotchd",
+        "title": "dbotchdashboard",
+        "width": 4,
+        "headerColor": "#2d4e8a",
+        "file": "index.html"
+      }
+    ]
+  }
 }
