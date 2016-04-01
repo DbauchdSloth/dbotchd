@@ -3,10 +3,21 @@ var argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const util = require('util');
 var express = require('express');
+var uuid = require('uuid');
 
 var routes        = require('./routes');
 var collections   = require('./collections');
 var twitchService = require('./twitch-api');
+
+function Event(type, opts) {  //var e = new Event(type, args);
+  this.id = uuid.v4();
+  this.type = type;
+  this.created = new Date();
+  for (var key in opts) {
+    this[key] = opts[key];
+  }
+  return this;
+}
 
 app = express();
 
