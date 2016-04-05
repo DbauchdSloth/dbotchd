@@ -12,9 +12,15 @@ module.exports = function(username) {
   //var gamesdb     = new loki("db/otchd/games.json");
   //var activitydb  = new loki("db/otchd/activity.json");
 
-  var userdb  = new loki('user-store.json');
-  var eventdb = new loki('event-store.json');
-  var gamedb  = new loki('game-store.json');
+  var lokiConfig = {
+    autosave: true,
+    autosaveInternal: 1000,
+    autoLoad: true
+  };
+
+  var userdb  = new loki('user-store.json', lokiConfig);
+  var eventdb = new loki('event-store.json', lokiConfig);
+  var gamedb  = new loki('game-store.json', lokiConfig);
 
   // simple persistent loki collections
   this.events         = eventdb.addCollection('events');

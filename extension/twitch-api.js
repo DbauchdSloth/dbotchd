@@ -17,7 +17,6 @@ module.exports = function(emitter, username, secret, config) {
       var channel = JSON.parse(body);
       if (!channels.get(channel._id)) { // really needed or insert sure to be overwrite?
         db.channels.insert(channel);
-        db.save();
       }
     });
     return true;
@@ -31,7 +30,6 @@ module.exports = function(emitter, username, secret, config) {
       var user = JSON.parse(body);
       if (!users.get(user._id)) {
         db.users.insert(user);
-        db.save();
       }
     });
     return true;
@@ -65,12 +63,10 @@ module.exports = function(emitter, username, secret, config) {
       if (err) return console.error(err);
       var response = JSON.parse(body);
       db.topGames.insert(response.top);
-      db.save();
       for (var i in response.top) {
         var game = response.top[i].game;
         if(game && !games.get(game._id)) {
           games.insert(game);
-          db.save();
         }
       }
     });
@@ -88,7 +84,6 @@ module.exports = function(emitter, username, secret, config) {
       if (err) return console.error(err);
       var chatProps = JSON.parse(body);
       db.chatProperties.insert(chatProps);
-      db.save();
     });
     return true;
   };
@@ -110,7 +105,6 @@ module.exports = function(emitter, username, secret, config) {
       port: port
     };
     db.events.insert(event);
-    db.save();
     return true;
   };
 
@@ -124,7 +118,6 @@ module.exports = function(emitter, username, secret, config) {
       username: user
     };
     db.events.insert(event);
-    db.save();
     if (!db.users.findObject({"username": { "$eq": user}})) {
       emitter.emit("cache-user", user);
     }
@@ -140,7 +133,6 @@ module.exports = function(emitter, username, secret, config) {
       username: user.username
     };
     db.events.insert(event);
-    db.save();
   };
 
   this.onHosted = function(channel, user, viewers) {
@@ -154,7 +146,6 @@ module.exports = function(emitter, username, secret, config) {
       viewers: viewers
     };
     db.events.insert(event);
-    db.save();
     //if (isDev()) console.dir(event);
     if (!db.users.findObject({"username": { "$eq": user.username}})) {
       emitter.emit("cache-user", user.username);
@@ -176,7 +167,6 @@ module.exports = function(emitter, username, secret, config) {
       username: user.username,
       message: message
     });
-    db.save();
     if (!db.users.findObject({"username": {"$eq": user.username }})) {
       emitter.emit("cache-user", user.username);
     }
@@ -197,7 +187,6 @@ module.exports = function(emitter, username, secret, config) {
       user: user.username,
       message: message
     });
-    db.save();
     if (!db.users.findObject({"username": {"$eq": user.username }})) {
       emitter.emit("cache-user", user.username);
     }
@@ -213,7 +202,6 @@ module.exports = function(emitter, username, secret, config) {
       var response = JSON.parse(body);
       db.follows.removeDataOnly();
       db.follows.insert(response.follows);
-      db.save();
     });
   });
 
@@ -228,7 +216,6 @@ module.exports = function(emitter, username, secret, config) {
       message: message
     };
     db.events.insert(event);
-    db.save();
     //if (isDev()) console.dir(event);
     if (command == "!ut") {
       // TODO: show uptime of current video if running, and total uptime last 24 hours
