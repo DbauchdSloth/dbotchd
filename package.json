@@ -38,9 +38,9 @@
     ],
     "graphics": [
       {
-        "name": "title",
-        "title": "DbauchdSloth Title Sequnce",
-        "file": "title.html"
+        "file": "title.html",
+        "width": 1280,
+        "height": 720
       }
     ]
   },
