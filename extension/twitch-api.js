@@ -39,7 +39,7 @@ module.exports = function(emitter, username, secret, config) {
     }, function(err, res, body) {
       if (err) return console.error(err);
       var user = JSON.parse(body);
-      if (!users.get(user._id)) {
+      if (!users.findOne({"_id": {"$eq": user._id}})) {
         db.users.insert(user);
       }
     });
@@ -59,10 +59,10 @@ module.exports = function(emitter, username, secret, config) {
     if (!name) return console.error("missing argument");
     var userId = this.getUserId(name);
     if (!userId) return console.error("missing result");
-    if (!db.users.get(userId)) {
+    if (!users.findOne({"_id": {"$eq": userId}})) {
       this.cacheUser(name);
     }
-    return db.users.get(userId);
+    return db.users.findOne({"_id": {"$eq": userId}});
   }
 
   this.cacheGames = function(limit, offset) {
