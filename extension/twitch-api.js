@@ -1,4 +1,5 @@
 var irc  = require('tmi.js');
+var uuid = require('uuid');
 var collections = require('./collections');
 
 function Event(type, opts) {  //var e = new Event(type, args);
