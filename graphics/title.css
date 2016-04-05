@@ -1,0 +1,46 @@
+@font-face {
+  font-family: dots;
+  src: url('font/BPdotsUnicaseLight.otf');
+}
+
+@font-face {
+  font-family: dots;
+  font-weight: bold;
+  src: url('font/BPdotsUnicase.otf');
+}
+
+body {
+  background-color: black;
+}
+
+.banner {
+  vertical-align: middle;
+}
+
+.icon {
+  padding-top: 12px;
+}
+
+.fa-circle {
+  color: white;
+}
+
+h1 {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: dots;
+  font-weight: bold;
+  font-size: 600%;
+  text-align: center;
+  text-shadow: 0 0 16px white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: white;
+}
+
+h3 {
+  color: white;
+  display: inline;
+  font-family: dots;
+  font-size: 250%;
+  vertical-align: middle;
+  text-shadow: 0 0 5px white;
+}
