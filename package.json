@@ -27,6 +27,20 @@
         "width": 2,
         "headerColor": "#2d4e8a",
         "file": "index.html"
+      },
+      {
+        "name": "title",
+        "title": "Title",
+        "width": 2,
+        "headerColor": "#2d4e8a",
+        "file": "title.html"
+      }
+    ],
+    "graphics": [
+      {
+        "name": "title",
+        "title": "DbauchdSloth Title Sequnce",
+        "file": "title.html"
       }
     ]
   },
