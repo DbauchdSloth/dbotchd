@@ -3,6 +3,7 @@ var argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const util = require('util');
 var express = require('express');
+var uuid = require('uuid');
 
 var routes        = require('./routes');
 var collections   = require('./collections');

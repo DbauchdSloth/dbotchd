@@ -1,6 +1,16 @@
 var irc  = require('tmi.js');
 var collections = require('./collections');
 
+function Event(type, opts) {  //var e = new Event(type, args);
+  this.id = uuid.v4();
+  this.type = type;
+  this.created = new Date();
+  for (var key in opts) {
+    this[key] = opts[key];
+  }
+  return this;
+}
+
 module.exports = function(emitter, username, secret, config) {
 
   var started = new Date();
@@ -118,6 +128,7 @@ module.exports = function(emitter, username, secret, config) {
       username: user
     };
     db.events.insert(event);
+    db.events.insert(new Event("join", {channel: channel, username: user}));
     if (!db.users.findObject({"username": { "$eq": user}})) {
       emitter.emit("cache-user", user);
     }
