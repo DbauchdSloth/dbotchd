@@ -90,8 +90,8 @@ module.exports = function(emitter, username, secret, config) {
         var tchannel = JSON.parse(body);
         var channel = new Channel(name);
         channels.insert(channel);
-        //vres = socialGraph.addVertex(channel.toVertex());
-        //if (vres.error) return console.error(vres.error);
+        vres = socialGraph.addVertex(channel.toVertex());
+        if (vres.error) return console.error(vres.error);
         //entities.insert(vres.result);
       });
       cacheChannelHosting(name);
@@ -117,8 +117,8 @@ module.exports = function(emitter, username, secret, config) {
         var tuser = JSON.parse(body);
         var user = new User(tuser.username);
         users.insert(user);
-        //vres = socialGraph.addVertex(user.toVertex());
-        //if (vres.error) return console.error(vres.error);
+        vres = socialGraph.addVertex(user.toVertex());
+        if (vres.error) return console.error(vres.error);
         //entities.insert(vres.result);
       });
     }
