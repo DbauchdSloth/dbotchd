@@ -1,4 +1,5 @@
 var Entity = require('../src/entity').Entity;
+var uuid = require('uuid');
 const util = require('util');
 
 Event = (function(superclass) {
