@@ -65,7 +65,7 @@ module.exports = function(emitter, username, secret, config) {
         };
         vres = socialGraph.addVertex(u: channel._id, p: node);
         if (vres.error) return console.error(vres.error);
-        nodes.insert(vres.response);
+        nodes.insert(vres.result);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
