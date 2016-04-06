@@ -63,7 +63,7 @@ module.exports = function(emitter, username, secret, config) {
           id: channel._id,
           name: channel.name
         };
-        vres = socialGraph.addVertex(u: channel._id, p: node);
+        vres = socialGraph.addVertex({u: channel._id, p: node});
         if (vres.error) return console.error(vres.error);
         nodes.insert(vres.result);
       });
