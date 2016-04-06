@@ -23,14 +23,14 @@
     "dashboardPanels": [
       {
         "name": "dbotchd",
-        "title": "#dbauchdsloth",
+        "title": "#dbauchdsloth user list",
         "width": 2,
         "headerColor": "#2d4e8a",
-        "file": "index.html"
+        "file": "channel-user-list.html"
       },
       {
         "name": "title",
-        "title": "Title",
+        "title": "title control",
         "width": 2,
         "headerColor": "#2d4e8a",
         "file": "title.html"

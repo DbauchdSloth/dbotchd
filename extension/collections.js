@@ -18,6 +18,8 @@ module.exports = function(username) {
     autoLoad: true
   };
 
+  var mediadb = new loki(username + '-media.json', lokiConfig);
+
   var userdb  = new loki('user-store.json', lokiConfig);
   var eventdb = new loki('event-store.json', lokiConfig);
   var gamedb  = new loki('game-store.json', lokiConfig);
@@ -31,11 +33,13 @@ module.exports = function(username) {
   this.currentHosts   = userdb.addCollection('currentHosts');
   this.games          = gamedb.addCollection('games', { indices: [ "_id" ] });
   this.topGames       = gamedb.addCollection('topGames');
+  this.playlist       = mediadb.addCollection('playlist');
 
   this.save = function() {
     eventdb.save();
     userdb.save();
     gamedb.save();
+    mediadb.save();
   }
 
   return this;

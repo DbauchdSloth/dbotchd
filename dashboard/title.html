@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="import" href="components/polymer/polymer.html">
+  <link rel="import" href="components/iron-icon/iron-icon.html">
+  <link rel="import" href="components/iron-icons/iron-icons.html">
   <link rel="import" href="components/paper-input/paper-input.html">
   <link rel="import" href="components/paper-button/paper-button.html">
   <script src="title.js"></script>
@@ -8,6 +11,7 @@
 <body>
   <paper-input label="Title" placeholder="DbauchdSloth"></paper-input>
   <paper-input label="Alt Title" placeholder="Starting Soon"></paper-input>
-  <paper-button raised>SUBMIT</paper-button>
+  <paper-button class="submit" raised>SUBMIT</paper-button>
+  <paper-button class="reset" raised><iron-icon icon="refresh"></iron-icon>RESET</paper-button>
 </body>
 </html>
