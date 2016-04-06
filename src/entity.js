@@ -1,6 +1,6 @@
 module.exports.Entity = (function() {
-  /*
   function Entity(id, opts) {
+    /*
     this.id = id;
     this.created = new Date();
     for (var key in opts) {
@@ -16,9 +16,9 @@ module.exports.Entity = (function() {
     this.toJSON = function() {
       return JSON.parse(this);
     };
+    */
   }
   return Entity;
-  */
 })();
 /*
 module.exports.Relationship = (function() {
@@ -34,7 +34,7 @@ module.exports.Relationship = (function() {
       for (var key in this) {
         props.key = this[key];
       }
-      return {e:{u:this.subject,v:this.predicate},p:props}}
+      return {e:{u:this.subject,v:this.predicate},p:props}};
     };
     this.toJSON = function() {
       return JSON.parse(this);
