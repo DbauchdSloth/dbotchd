@@ -1,27 +1,59 @@
-var loki = require('lokijs');
+var loki    = require('lokijs');
 var jsgraph = require('jsgraph');
-var irc  = require('tmi.js');
-var uuid = require('uuid');
+var irc     = require('tmi.js');
+var uuid    = require('uuid');
 var express = require('express');
 
-//var collections = require('./collections');
-function Event(type, opts) {  //var e = new Event(type, args);
-  this.id = uuid.v4();
-  this.type = type;
-  this.created = new Date();
-  for (var key in opts) {
-    this[key] = opts[key];
-  }
-  return this;
-}
+var extend  = require('../src/util').extend;
+var digraph = require('../src/digraph');
+var entity  = require('../src/entity');
 
-function DirectedGraph(name) {
-  var res = jsgraph.directed.create();
-  if (res.error) return console.error(res.error);
-  var graph = res.result;
-  graph.name = name;
-  return graph;
-}
+DirectedGraph = digraph.DirectedGraph;
+Entity        = entity.Entity;
+Relationship  = entity.Relationship;
+
+User = (function(superclass) {
+  extend(User, superClass);
+  function User(username) {
+    return User.__super__.constructor.apply(this, username, {username: username});
+  }
+  return User;
+})(Entity);
+
+Channel = (function(superclass) {
+  extend(Channel, superClass);
+  function Channel(username) {
+    return User.__super__.constructor.apply(this, username, {username: username});
+  }
+  return Channel;
+})(Entity);
+
+//var collections = require('./collections');
+Event = (function(superClass) {  //var e = new Event(type, args);
+  extend(Event, superClass);
+  function Event(opts) {
+    Event.__super__.constructor.apply(this, uuid.v4(), opts);
+  }
+  return Event;
+})(Entity);
+
+JoinEvent = (function(superClass) {
+  extend(JoinEvent, superClass);
+  function JoinEvent(channel, username) {
+    this.eventType = "irc-join";
+    return User.__super__.constructor.apply(this, {channel: channel, username: username});
+  }
+  return JoinEvent;
+})(Event);
+
+PartEvent = (function(superClass) {
+  extend(PartEvent, superClass);s
+  function PartEvent(channel, username) {
+    this.eventType = "irc-part";
+    return User.__super__.constructor.apply(this, {channel: channel, username: username});
+  }
+  return PartEvent;
+})(Event);
 
 module.exports = function(emitter, username, secret, config) {
 
@@ -32,14 +64,13 @@ module.exports = function(emitter, username, secret, config) {
     autosaveInterval: 1000
   };
 
-  var socialdb = new loki('twitch-' + username + '-social-graph.json');
-  var nodes = socialdb.addCollection('nodes');
-  var edges = socialdb.addCollection('edges');
-
-  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
-
   var channeldb = new loki('twitch-channel.json', lokiConfig);
   var channels  = channeldb.addCollection('channels');
+
+  var socialdb = new loki('twitch-' + username + '-social-graph.json');
+  var entities = socialdb.addCollection('entities');
+  var relationships = socialdb.addCollection('relationships');
+  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
 
   var userdb = new loki('twitch-' + username + '.json', lokiConfig);
   var users      = userdb.addCollection('users');
@@ -56,16 +87,12 @@ module.exports = function(emitter, username, secret, config) {
         url: "https://api.twitch.tv/kraken/channels/" + name
       }, function(err, res, body) {
         if (err) return console.error(err);
-        channel = JSON.parse(body);
-        channels.insert(channel);
-        var node = {
-          type: "channel",
-          id: channel._id,
-          name: channel.name
-        };
-        vres = socialGraph.addVertex({u: channel._id, p: node});
+        vat tchannel = JSON.parse(body);
+        var channel new Channel(username);
+        channels.insert(channel.toJSON());
+        vres = socialGraph.addVertex(channel.toVertex());
         if (vres.error) return console.error(vres.error);
-        nodes.insert(vres.result);
+        entities.insert(vres.result);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -87,54 +114,32 @@ module.exports = function(emitter, username, secret, config) {
         url: "https://api.twitch.tv/kraken/users/" + name
       }, function(err, res, body) {
         if (err) return console.error(err);
-        user = JSON.parse(body);
-        users.insert(user);
-        var node = {
-          type: "user",
-          id: user._id,
-          username: user.username
-        };
-        vres = socialGraph.addVertex({u: user._id, p: node});
+        var tuser = JSON.parse(body);
+        var user = new User(tuser.username);
+        users.insert(user.toJSON());
+        vres = socialGraph.addVertex(user.toVertex());
         if (vres.error) return console.error(vres.error);
-        nodes.insert(vres.result);
+        entities.insert(vres.result);
       });
     }
   }
 
   function onConnected(address, port) {
-    var ts = new Date();
-    var event = {
-      created: ts.toUTCString(),
-      type: "connected",
-      address: address,
-      port: port
-    };
-    events.insert(event);
-    return true;
+    var event = new Event("irc-connected", {address: address, port: port});
+    console.dir(event);
   }
 
   function onJoin(channel, user) {
-    var ts = new Date();
-    console.log("%s [%s] <%s> join", ts.toUTCString(), channel, user);
-    var event = {
-      created: ts.toUTCString(),
-      type: "join",
-      channel: channel,
-      username: user
-    };
+    var event = new JoinEvent(channel, user);
     events.insert(event);
-    cacheUser(user);
+    var user = users.findObject({"username": {"$eq": username}});
+    if (!user) {
+      cacheUser(user);
+    }
   }
 
-  function onPart(channel, user) {
-    var ts = new Date();
-    console.log("%s [%s] <%s> part", ts.toUTCString(), channel, user);
-    var event = {
-      created: ts.toUTCString(),
-      type: "part",
-      channel: channel,
-      username: user
-    };
+  function onPart(channel, username) {
+    var event = new PartEvent(channel, user);
     events.insert(event);
   };
 
@@ -149,7 +154,9 @@ module.exports = function(emitter, username, secret, config) {
       viewers: viewers
     };
     events.insert(event);
-    cacheUser(user.username);
+    if (!user) {
+      cacheUser(user);
+    }
   }
 
   function onChat(channel, user, message, self) {
