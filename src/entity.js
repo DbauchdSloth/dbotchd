@@ -1,6 +1,6 @@
 var uuid = require('uuid');
 const util = require('util');
-var error = require('error');
+var error = require('./error');
 
 var InvalidOptionError = error.InvalidOptionError;
 
