@@ -1,6 +1,8 @@
+var uuid    = require('uuid');
+
 module.exports.Entity = (function() {
   function Entity(id, opts) {
-    this.id = id;
+    this.id = id || uuid.v4();
     this.created = new Date();
     for (var key in opts) {
       this[key] = opts[key];
