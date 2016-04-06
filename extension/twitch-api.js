@@ -14,15 +14,16 @@ var Relationship  = entity.Relationship;
 
 
 var User = (function(superclass) {
-  extend(User, superClass);
+  extend(User, superclass);
   function User(username) {
     return User.__super__.constructor.apply(this, username, {username: username});
   }
   return User;
 })(Entity);
+
 /*
 Channel = (function(superclass) {
-  extend(Channel, superClass);
+  extend(Channel, superclass);
   function Channel(username) {
     return User.__super__.constructor.apply(this, username, {username: username});
   }
