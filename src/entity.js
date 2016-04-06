@@ -12,11 +12,9 @@ module.exports.Entity = (function() {
       }
       return {u:this.id,p:props};
     };
-    /*
     this.toJSON = function() {
       return JSON.parse(this);
     };
-    */
   }
   return Entity;
 })();
