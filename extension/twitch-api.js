@@ -8,8 +8,8 @@ var digraph = require('../src/digraph');
 var entity  = require('../src/entity');
 
 var extend = util.extend;
-//var DirectedGraph = digraph.DirectedGraph;
-//var Entity        = entity.Entity;
+var DirectedGraph = digraph.DirectedGraph;
+var Entity        = entity.Entity;
 //var Relationship  = entity.Relationship;
 
 /*

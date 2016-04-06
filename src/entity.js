@@ -18,9 +18,10 @@ module.exports.Entity = (function() {
   }
   return Entity;
 })();
-/*
+
 module.exports.Relationship = (function() {
   function Relationship(opts) {
+    /*
     if (!opts.subject || !opts.predicate)
       return console.log("missing one or more required options");
     this.created = new Date();
@@ -37,6 +38,7 @@ module.exports.Relationship = (function() {
     this.toJSON = function() {
       return JSON.parse(this);
     };
+    */
   }
   return Relationship;
 })();
