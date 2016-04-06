@@ -1,3 +1,4 @@
+hasProp = {}.hasOwnProperty;
 module.exports.extend = function(child, parent) {
   for (var key in parent) {
     if (hasProp.call(parent, key))
