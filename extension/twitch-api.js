@@ -3,17 +3,23 @@ var irc     = require('tmi.js');
 var uuid    = require('uuid');
 var express = require('express');
 
-var util  = require('../src/util');
-var digraph = require('../src/digraph');
-var entity  = require('../src/entity');
+const util = require('util');
+const digraph = require('../src/digraph');
+const entity  = require('../src/entity');
 
-var extend = util.extend;
 var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
 var Relationship  = entity.Relationship;
 
+const twevents = require('./twitch-event');
+var JoinEvent = twevents.JoinEvent;
+var PartEvent = twevents.PartEvent;
+var HostEvent = twevents.HostEvent;
+var ChatEvent = twevents.ChatEvent;
+var ActionEvent = twevents.ActionEvent;
+
 var User = (function(superclass) {
-  extend(User, superclass);
+  util.inherits(User, superclass);
   function User(username) {
     return User.__super__.constructor.apply(this, username, {username: username});
   }
@@ -21,42 +27,16 @@ var User = (function(superclass) {
 })(Entity);
 
 var Channel = (function(superclass) {
-  extend(Channel, superclass);
+  util.inherits(Channel, superclass);
   function Channel(username) {
-    return User.__super__.constructor.apply(this, username, {username: username});
+    return Channel.__super__.constructor.apply(this, username, {username: username});
   }
   return Channel;
 })(Entity);
 
-var Event = (function(superclass) {
-  extend(Event, superclass);
-  function Event(opts) {
-    Event.__super__.constructor.apply(this, uuid.v4(), opts);
-  }
-  return Event;
-})(Entity);
-
-var JoinEvent = (function(superclass) {
-  extend(JoinEvent, superclass);
-  function JoinEvent(channel, username) {
-    this.eventType = "irc-join";
-    return User.__super__.constructor.apply(this, {channel: channel, username: username});
-  }
-  return JoinEvent;
-})(Event);
-
-var PartEvent = (function(superclass) {
-  extend(PartEvent, superclass);
-  function PartEvent(channel, username) {
-    this.eventType = "irc-part";
-    return User.__super__.constructor.apply(this, {channel: channel, username: username});
-  }
-  return PartEvent;
-})(Event);
-
 module.exports = function(emitter, username, secret, config) {
 
-  this.started = new Date();
+  var started = new Date();
 
   var lokiConfig = {
     autosave: true,
@@ -79,7 +59,7 @@ module.exports = function(emitter, username, secret, config) {
 
   this.client = new irc.client(config);
 
-  this.cacheChannel= function(name) {
+  this.cacheChannel = function(name) {
     //var channel = channels.findObject({"name": {"$eq": name}});
     if (!channel) { // always cache channels for now
       client.api({
@@ -188,6 +168,11 @@ module.exports = function(emitter, username, secret, config) {
       message: message
     });
     cacheUser(user.username);
+    var commandPattern = new RegExp("^!\\w+");
+    if (commandPattern.test(message)) {
+      var command = commandPattern.exec(message);
+      emitter.emit("command-dispatch", command, user.username, message);
+    }
   };
 
   this.say = function(channel, message) {
@@ -201,6 +186,7 @@ module.exports = function(emitter, username, secret, config) {
   this.client.on("chat", onChat);
   this.client.on("action", onAction);
 
+  // still needed?
   emitter.on('cache-user', this.cacheUser);
   emitter.on('cache-channel', this.cacheChannel);
   emitter.on('cache-channel-hosting', this.cacheChannelHosting);

@@ -7,13 +7,13 @@ module.exports.Entity = (function() {
     for (var key in opts) {
       this[key] = opts[key];
     }
-    this.toVertex = function() {
-      var props = {};
-      for (var key in this) {
-        props.key = this[key];
-      }
-      return {u:this.id,p:props};
-    };
+  }
+  Entity.prototype.toVertex = function() {
+    var props = {};
+    for (var key in this) {
+      props.key = this[key];
+    }
+    return {u:this.id,p:props};
   }
   return Entity;
 })();
@@ -26,13 +26,13 @@ module.exports.Relationship = (function() {
     for (var key in opts) {
       this[key] = opts[key];
     }
-    this.toEdge = function() {
-      var props = {};
-      for (var key in this) {
-        props.key = this[key];
-      }
-      return {e:{u:this.subject,v:this.predicate},p:props};
-    };
+  }
+  Relationship.prototype.toEdge = function() {
+    var props = {};
+    for (var key in this) {
+      props.key = this[key];
+    }
+    return {e:{u:this.subject,v:this.predicate},p:props};
   }
   return Relationship;
 })();
