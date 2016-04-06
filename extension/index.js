@@ -58,7 +58,7 @@ module.exports = function(nodecg) {
 
   var shutdown = function() {
     console.log("disconnecting from Twitch API");
-    twitch.disconnect();
+    //twitch.disconnect();
     // TODO: graceful shutdown.  LOok in to nodecg source to figure out how to get at server object
   }
   process.on ('SIGTERM', shutdown);

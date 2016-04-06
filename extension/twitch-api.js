@@ -175,6 +175,7 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
 
   this.router = express.Router();
+  /*
   this.router.get('/channel/:name', function(req, res) {
     cacheChannel(req.params.name);
     return res.json(channels.find({"name": req.params.name}));
@@ -187,7 +188,7 @@ module.exports = function(emitter, username, secret, config) {
     cacheChannel(req.params.name);
     return res.json(follows.find());
   });
-
+*/
   // register new router for every new user identified so they get their own base loki file registered once
 
   this.connect = function() {
