@@ -79,6 +79,8 @@ module.exports = function(emitter, username, secret, config) {
 
   this.client = new irc.client(config);
 
+  /*
+
   this.cacheChannel= function(name) {
     //var channel = channels.findObject({"name": {"$eq": name}});
     if (!channel) { // always cache channels for now
@@ -204,6 +206,8 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel', this.cacheChannel);
   emitter.on('cache-channel-hosting', this.cacheChannelHosting);
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
+
+  */
 
   this.router = express.Router();
   this.router.get('/channel/:name', function(req, res) {
