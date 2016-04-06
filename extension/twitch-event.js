@@ -4,8 +4,9 @@ const Event = require('../src/event').Event;
 module.exports.JoinEvent = (function(superclass) {
   util.inherits(JoinEvent, superclass);
   function JoinEvent(channel, username) {
-    this.eventType = "twitch-chanel-join";
-    return superclass.constructor.apply(this, {channel: channel, username: username});
+    var e = superclass.constructor.apply(this, {channel: channel, username: username});
+    e.prototype.eventType = "twitch-chanel-join";
+    return e;
   }
   return JoinEvent;
 })(Event);
@@ -13,8 +14,9 @@ module.exports.JoinEvent = (function(superclass) {
 module.exports.PartEvent = (function(superclass) {
   util.inherits(PartEvent, superclass);
   function PartEvent(channel, username) {
-    this.eventType = "twitch-channel-part";
-    return superclass.constructor.apply(this, {channel: channel, username: username});
+    var e = superclass.constructor.apply(this, {channel: channel, username: username});
+    e.prototype.eventType = "twitch-channel-part";
+    return e;
   }
   return PartEvent;
 })(Event);
@@ -22,8 +24,9 @@ module.exports.PartEvent = (function(superclass) {
 module.exports.ChatEvent = (function(superclass) {
   util.inherits(ChatEvent, superclass);
   function ChatEvent(channel, username, message) {
-    this.eventType = "twitch-channel-chat";
-    return superclass.constructor.apply(this, {channel: channel, username: username, message:message});
+    var e = superclass.constructor.apply(this, {channel: channel, username: username, message:message});
+    e.prototype.eventType = "twitch-channel-chat";
+    return e;
   }
   return ChatEvent;
 })(Event);
@@ -31,8 +34,9 @@ module.exports.ChatEvent = (function(superclass) {
 module.exports.ActionEvent = (function(superclass) {
   util.inherits(ActionEvent, superclass);
   function ActionEvent(channel, username, message) {
-    this.eventType = "twitch-channel-action";
-    return superclass.constructor.apply(this, {channel: channel, username: username, message:message});
+    var e = superclass.constructor.apply(this, {channel: channel, username: username, message:message});
+    e.prototype.eventType = "twitch-channel-action";
+    return e;
   }
   return ActionEvent;
 })(Event);
@@ -40,8 +44,9 @@ module.exports.ActionEvent = (function(superclass) {
 module.exports.HostEvent = (function(superclass) {
   util.inherits(HostEvent, superclass);
   function HostEvent(channel, username, count) {
-    this.eventType = "twitch-channel-host";
-    return superclass.constructor.apply(this, {channel: channel, username: username, viewers:count});
+    var e = superclass.constructor.apply(this, {channel: channel, username: username, viewers:count});
+    e.prototype.eventType = "twitch-channel-host";
+    return e;
   }
   return HostEvent;
 })(Event);

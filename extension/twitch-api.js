@@ -11,12 +11,12 @@ var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
 var Relationship  = entity.Relationship;
 
-const twevents = require('./twitch-event');
-var JoinEvent = twevents.JoinEvent;
-var PartEvent = twevents.PartEvent;
-var HostEvent = twevents.HostEvent;
-var ChatEvent = twevents.ChatEvent;
-var ActionEvent = twevents.ActionEvent;
+var twitchEvent = require('./twitch-event');
+var JoinEvent   = twitchEvent.JoinEvent;
+var PartEvent   = twitchEvent.PartEvent;
+var HostEvent   = twitchEvent.HostEvent;
+var ChatEvent   = twitchEvent.ChatEvent;
+var ActionEvent = twitchEvent.ActionEvent;
 
 var User = (function(superclass) {
   util.inherits(User, superclass);
