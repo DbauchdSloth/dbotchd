@@ -6,7 +6,7 @@ var express = require('express');
 var uuid = require('uuid');
 
 var routes           = require('./routes');
-var commmandDispatch = require('./commands');
+//var commmandDispatch = require('./commands');
 var twitchService    = require('./twitch-api');
 
 app = express();
@@ -44,7 +44,7 @@ module.exports = function(nodecg) {
   };
 
   var twitch = twitchService(emitter, username, secret, twitchConfig);
-  var command = commmandDispatch(emitter, twitch);
+  //var command = commmandDispatch(emitter, twitch);
 
   app.use('/api/', routes);
   app.use('/twitch/,' twitch.router);

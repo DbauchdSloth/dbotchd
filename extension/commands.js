@@ -21,4 +21,5 @@ module.exports = function(emitter, twitch) {
 
   emitter.on("command-dispatch", onCommandDispatch);
 
+  return this;
 };
