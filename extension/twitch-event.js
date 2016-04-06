@@ -4,10 +4,7 @@ const util = require('util');
 Event = (function(superclass) {
   util.inherits(Event, superclass);
   function Event(type, opts) {
-    superclass.constructor.apply(this, [uuid.v4(), opts]);
-  }
-  Event.prototype.toObject = function() {
-    return superclass.toObject();
+    return superclass.constructor.apply(this, [uuid.v4(), opts]);
   }
   return Event;
 })(Entity);
