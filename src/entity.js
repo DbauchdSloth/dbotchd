@@ -12,9 +12,6 @@ module.exports.Entity = (function() {
       }
       return {u:this.id,p:props};
     };
-    this.toJSON = function() {
-      return JSON.parse(this);
-    };
   }
   return Entity;
 })();
@@ -33,9 +30,6 @@ module.exports.Relationship = (function() {
         props.key = this[key];
       }
       return {e:{u:this.subject,v:this.predicate},p:props};
-    };
-    this.toJSON = function() {
-      return JSON.parse(this);
     };
   }
   return Relationship;

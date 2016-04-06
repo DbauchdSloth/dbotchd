@@ -88,7 +88,7 @@ module.exports = function(emitter, username, secret, config) {
       }, function(err, res, body) {
         if (err) return console.error(err);
         var tchannel = JSON.parse(body);
-        var channel = new Channel(username);
+        var channel = new Channel(name);
         channels.insert(channel);
         //vres = socialGraph.addVertex(channel.toVertex());
         //if (vres.error) return console.error(vres.error);
