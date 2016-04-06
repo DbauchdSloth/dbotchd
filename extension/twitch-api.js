@@ -78,8 +78,7 @@ module.exports = function(emitter, username, secret, config) {
             { name: "view-count", value: channel.views },
           ]
         }});
-        if (vres.error) return console.error(vres.error);
-        var vres = socialGraph.addVertex({u: channel.id, p: node);
+        var vres = socialGraph.addVertex({u: channel.id, p: node});
         if (vres.error) return console.error(res.error);
         nodes.insert(vres.result);
       }
@@ -112,7 +111,7 @@ module.exports = function(emitter, username, secret, config) {
           id: user._id,
           username: user.username
         };
-        var vres = socialGraph.addVertex({u: user.id, p: node);
+        var vres = socialGraph.addVertex({u: user.id, p: node});
         if (vres.error) return console.error(vres.error);
         nodes.insert(vres.result);
       });
