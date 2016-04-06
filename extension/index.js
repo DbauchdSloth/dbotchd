@@ -53,13 +53,13 @@ module.exports = function(nodecg) {
   nodecg.mount(app);
 
   app.on("mount", function(nodecg) {
-    twitch.cacheUser(username);
+    //twitch.cacheUser(username);
   });
 
   var shutdown = function() {
     console.log("disconnecting from Twitch API");
     twitch.disconnect();
-    server.close(function() {
+    nodecg.close(function() {
       console.log("Closed out remaining connections.");
       process.exit()
     });
