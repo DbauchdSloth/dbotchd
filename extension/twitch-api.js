@@ -15,7 +15,6 @@ function Event(type, opts) {  //var e = new Event(type, args);
   return this;
 }
 
-/*
 function DirectedGraph(name) {
   var res = jsgraph.directed.create();
   if (res.error) return console.error(res.error);
@@ -23,7 +22,6 @@ function DirectedGraph(name) {
   graph.name = name;
   return graph;
 }
-*/
 
 module.exports = function(emitter, username, secret, config) {
 
@@ -38,7 +36,7 @@ module.exports = function(emitter, username, secret, config) {
   var nodes = socialdb.addCollection('nodes');
   var edges = socialdb.addCollection('edges');
 
-  //var socialGraph = new DirectedGraph("twitch-" + username + "-social");
+  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
 
   var channeldb = new loki('twitch-channel.json', lokiConfig);
   var channels  = channeldb.addCollection('channels');
@@ -60,7 +58,15 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         channel = JSON.parse(body);
         channels.insert(channel);
-      }
+        var node = {
+          type: "channel",
+          id: channel._id;
+          name: channel.name;
+        };
+        vres = socialGraph.addVertex(u: channel._id, p: node);
+        if (vres.error) return console.error(vres.error);
+        nodes.insert(vres.response);
+      });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
     }
