@@ -12,16 +12,15 @@ var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
 var Relationship  = entity.Relationship;
 
-/*
 
-User = (function(superclass) {
+var User = (function(superclass) {
   extend(User, superClass);
   function User(username) {
     return User.__super__.constructor.apply(this, username, {username: username});
   }
   return User;
 })(Entity);
-
+/*
 Channel = (function(superclass) {
   extend(Channel, superClass);
   function Channel(username) {
