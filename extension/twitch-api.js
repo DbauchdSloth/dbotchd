@@ -55,7 +55,7 @@ var PartEvent = (function(superclass) {
 })(Event);
 
 module.exports = function(emitter, username, secret, config) {
-/*
+
   this.started = new Date();
 
   var lokiConfig = {
@@ -89,9 +89,9 @@ module.exports = function(emitter, username, secret, config) {
         vat tchannel = JSON.parse(body);
         var channel new Channel(username);
         channels.insert(channel.toJSON());
-        vres = socialGraph.addVertex(channel.toVertex());
-        if (vres.error) return console.error(vres.error);
-        entities.insert(vres.result);
+        //vres = socialGraph.addVertex(channel.toVertex());
+        //if (vres.error) return console.error(vres.error);
+        //entities.insert(vres.result);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -116,9 +116,9 @@ module.exports = function(emitter, username, secret, config) {
         var tuser = JSON.parse(body);
         var user = new User(tuser.username);
         users.insert(user.toJSON());
-        vres = socialGraph.addVertex(user.toVertex());
-        if (vres.error) return console.error(vres.error);
-        entities.insert(vres.result);
+        //vres = socialGraph.addVertex(user.toVertex());
+        //if (vres.error) return console.error(vres.error);
+        //entities.insert(vres.result);
       });
     }
   }
@@ -220,7 +220,7 @@ module.exports = function(emitter, username, secret, config) {
   });
 
   // register new router for every new user identified so they get their own base loki file registered once
-*/
+
   this.connect = function() {
     this.client.connect();
   };
