@@ -22,7 +22,7 @@ module.exports.Entity = (function() {
   }
   Entity.prototype.toVertex = function() {
     var v, p = {};
-    Object.getOwnPropertyNames(this).forEach(function(key) { p.key = this[key]; });
+    this.getOwnPropertyNames().forEach(function(key) {p.key = this[key];});
     v.u = this.id;
     v.p = p;
     return v;
