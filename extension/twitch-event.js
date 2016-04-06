@@ -1,14 +1,5 @@
-var Entity = require('../src/entity').Entity;
-var uuid = require('uuid');
+var Event = require('../src/event').Event;
 const util = require('util');
-
-Event = (function(superclass) {
-  util.inherits(Event, superclass);
-  function Event(type, opts) {
-    return superclass.call(this, uuid.v4(), opts);
-  }
-  return Event;
-})(Entity);
 
 module.exports.JoinEvent = (function(superclass) {
   util.inherits(JoinEvent, superclass);
