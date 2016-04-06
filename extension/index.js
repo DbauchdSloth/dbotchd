@@ -3,6 +3,7 @@ var argv = require('minimist')(process.argv.slice(2));
 const EventEmitter = require('events');
 const util = require('util');
 var express = require('express');
+var http = require('http');
 
 var routes           = require('./routes');
 //var commmandDispatch = require('./commands');
@@ -58,7 +59,8 @@ module.exports = function(nodecg) {
   var shutdown = function() {
     console.log("disconnecting from Twitch API");
     twitch.disconnect();
-    nodecg.close(function() {
+    console.dir(app);
+    server.close(function() {
       console.log("Closed out remaining connections.");
       process.exit()
     });
