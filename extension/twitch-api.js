@@ -27,15 +27,16 @@ module.exports = function(emitter, username, secret, config) {
 
   this.started = new Date();
 
-  var socialdb = new loki('twitch-' + username + '-social-graph.json');
-  var nodes = socialdb.addCollection('nodes');
-  var edges = socialdb.addCollection('edges');
-  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
-
   var lokiConfig = {
     autosave: true,
     autosaveInterval: 1000
   };
+
+  var socialdb = new loki('twitch-' + username + '-social-graph.json');
+  var nodes = socialdb.addCollection('nodes');
+  var edges = socialdb.addCollection('edges');
+
+  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
 
   var channeldb = new loki('twitch-channel.json', lokiConfig);
   var channels  = channeldb.addCollection('channels');
@@ -57,30 +58,6 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         channel = JSON.parse(body);
         channels.insert(channel);
-        var node = {
-          type: "channel",
-          created: channel.created_at,
-          updated: channel.updated_at,
-          mature: channel.mature,
-          status: channel.status,
-          displayName: channel.displayName,
-          game: channel.game,
-          id: channel._id,
-          name: channel.name,
-          media: [
-            { image { name: "logo", href: channel.logo} },
-            { image { name: "banner", href: channel.banner} },
-            { image { name: "video-banner", href: channel.video_banner} },
-            { image { name: "profile-banner", href: channel.profile_banner} }
-          ],
-          stats: [
-            { name: "follow-count", value: channel.followers },
-            { name: "view-count", value: channel.views },
-          ]
-        }});
-        var vres = socialGraph.addVertex({u: channel.id, p: node});
-        if (vres.error) return console.error(res.error);
-        nodes.insert(vres.result);
       }
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -104,16 +81,6 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         user = JSON.parse(body);
         users.insert(user);
-        var node =  {
-          type: "user",
-          created: user.created_at,
-          updated: user.updated_at,
-          id: user._id,
-          username: user.username
-        };
-        var vres = socialGraph.addVertex({u: user.id, p: node});
-        if (vres.error) return console.error(vres.error);
-        nodes.insert(vres.result);
       });
     }
   }
