@@ -57,9 +57,9 @@ PartEvent = (function(superClass) {
   }
   return PartEvent;
 })(Event);
-
+*/
 module.exports = function(emitter, username, secret, config) {
-
+/*
   this.started = new Date();
 
   var lokiConfig = {
