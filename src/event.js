@@ -1,7 +1,8 @@
 var Entity = require('./entity').Entity;
+const util = require('util');
 
 module.exports.Event = (function(superclass) {
-  extend(Event, superclass);
+  util.inherits(Event, superclass);
   function Event(opts) {
     Event.__super__.constructor.apply(this, uuid.v4(), opts);
   }
