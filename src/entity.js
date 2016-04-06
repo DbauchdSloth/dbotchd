@@ -17,7 +17,7 @@ function toJSON() {
 }
 
 module.exports.Entity = (function() {
-  /*
+
   function Entity(id, opts) {
     this.id = id || uuid.v4();
     this.created = new Date();
@@ -38,7 +38,7 @@ module.exports.Entity = (function() {
   Entity.prototype.toJSON = toJSON;
   return Entity;
 })();
-
+/*
 module.exports.Relationship = (function() {
   function Relationship(opts) {
     if (opts.s) opts.subject = opts.s;
