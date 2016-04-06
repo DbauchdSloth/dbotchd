@@ -79,7 +79,6 @@ module.exports = function(emitter, username, secret, config) {
 
   this.client = new irc.client(config);
 
-
   this.cacheChannel= function(name) {
     //var channel = channels.findObject({"name": {"$eq": name}});
     if (!channel) { // always cache channels for now

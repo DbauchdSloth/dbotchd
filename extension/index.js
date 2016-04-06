@@ -53,7 +53,7 @@ module.exports = function(nodecg) {
   nodecg.mount(app);
 
   app.on("mount", function(nodecg) {
-    //twitch.cacheUser(username);
+    twitch.cacheUser(username);
   });
 
   var shutdown = function() {
