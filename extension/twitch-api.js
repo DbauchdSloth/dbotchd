@@ -111,6 +111,7 @@ module.exports = function(emitter, username, secret, config) {
 
   function onJoin(channel, user) {
     var event = new JoinEvent(channel, user);
+    console.dir(event);
     events.insert(event);
     var user = users.findObject({"username": {"$eq": username}});
     if (!user) {
@@ -120,6 +121,7 @@ module.exports = function(emitter, username, secret, config) {
 
   function onPart(channel, username) {
     var event = new PartEvent(channel, user);
+    console.dir(event);
     events.insert(event);
   };
 
