@@ -32,12 +32,11 @@ module.exports.Relationship = (function() {
       for (var key in this) {
         props.key = this[key];
       }
-      return {e:{u:this.subject,v:this.predicate},p:props}};
+      return {e:{u:this.subject,v:this.predicate},p:props};
     };
     this.toJSON = function() {
       return JSON.parse(this);
     };
-
   }
   return Relationship;
 })();
