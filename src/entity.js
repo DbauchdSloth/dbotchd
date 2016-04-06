@@ -21,11 +21,9 @@ module.exports.Entity = (function() {
     }
   }
   Entity.prototype.toVertex = function() {
-    var v, p = {};
+    var p = {};
     Object.getOwnPropertyNames(this).forEach(function(key) { p.key = this[key]; });
-    v.u = this.id;
-    v.p = p;
-    return v;
+    return {u: this.id, p: p };
   }
   Entity.prototype.toObject = toObject;
   Entity.prototype.toJSON = function() { return JSON.stringify(this.toObject()) };
