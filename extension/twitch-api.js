@@ -175,6 +175,7 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
 
   this.router = express.Router();
+  
   /*
   this.router.get('/channel/:name', function(req, res) {
     cacheChannel(req.params.name);
