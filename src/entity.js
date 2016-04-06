@@ -1,6 +1,5 @@
 module.exports.Entity = (function() {
   function Entity(id, opts) {
-    /*
     this.id = id;
     this.created = new Date();
     for (var key in opts) {
@@ -13,6 +12,7 @@ module.exports.Entity = (function() {
       }
       return {u:this.id,p:props};
     };
+    /*
     this.toJSON = function() {
       return JSON.parse(this);
     };
