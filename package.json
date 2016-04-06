@@ -23,7 +23,7 @@
     "dashboardPanels": [
       {
         "name": "dbotchd",
-        "title": "#dbauchdsloth user list",
+        "title": "#dbauchdsloth users",
         "width": 2,
         "headerColor": "#2d4e8a",
         "file": "channel-user-list.html"

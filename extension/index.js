@@ -46,16 +46,13 @@ module.exports = function(nodecg) {
   };
 
   var twitch = twitchService(emitter, username, secret, twitchConfig);
+
   app.use('/', routes);
+  app.use('/api/,' twitch.router);
   nodecg.mount(app);
 
   app.on("mount", function(nodecg) {
     twitch.cacheUser(username);
-    twitch.cacheChannel(username);
-    twitch.cacheGames(5, 0);
   });
 
-
-  //emitter.emit('refresh-recent-follows', username);
-  //emitter.emit('refresh-current-hosts', username);
 }
