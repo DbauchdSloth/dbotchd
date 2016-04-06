@@ -37,7 +37,7 @@ module.exports.Relationship = (function() {
     this.toJSON = function() {
       return JSON.parse(this);
     };
-    */
+
   }
   return Relationship;
 })();
