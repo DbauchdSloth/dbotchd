@@ -24,7 +24,7 @@ module.exports = function(emitter, username, secret, config) {
   var started = new Date();
 
   var channeldb = new loki('twitch-channel.json', lokiConfig);
-  var cahnnels  = channeldb.addCollection('channels');
+  var channels  = channeldb.addCollection('channels');
 
   var userdb = new loki('twitch-' + username + '.json', lokiConfig);
   var users      = userdb.addCollection('users');
