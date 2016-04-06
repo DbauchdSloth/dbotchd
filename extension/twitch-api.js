@@ -79,7 +79,6 @@ module.exports = function(emitter, username, secret, config) {
 
   this.client = new irc.client(config);
 
-  /*
 
   this.cacheChannel= function(name) {
     //var channel = channels.findObject({"name": {"$eq": name}});
@@ -89,7 +88,7 @@ module.exports = function(emitter, username, secret, config) {
       }, function(err, res, body) {
         if (err) return console.error(err);
         vat tchannel = JSON.parse(body);
-        var channel new Channel(username);
+        var channel = new Channel(username);
         channels.insert(channel.toJSON());
         //vres = socialGraph.addVertex(channel.toVertex());
         //if (vres.error) return console.error(vres.error);
@@ -206,8 +205,6 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel', this.cacheChannel);
   emitter.on('cache-channel-hosting', this.cacheChannelHosting);
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
-
-  */
 
   this.router = express.Router();
   this.router.get('/channel/:name', function(req, res) {
