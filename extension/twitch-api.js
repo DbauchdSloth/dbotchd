@@ -4,7 +4,7 @@ var irc     = require('tmi.js');
 var uuid    = require('uuid');
 var express = require('express');
 
-//var util  = require('../src/util');
+var util  = require('../src/util');
 //var digraph = require('../src/digraph');
 //var entity  = require('../src/entity');
 
