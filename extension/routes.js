@@ -4,9 +4,9 @@ var express = require('express');
 var router = express.Router();
 //var db = collections();
 
-
-router.get('/', function(req, res) {
-  return res.json({foo: "bar"});
-});
+router.get('/user', function(req, res) {});
+router.get('/user/:id', function(req, res) {});
+router.get('/user/:id/channel', function(req, res) {});
+router.get('/user/:id/channel/twitch', function(req, res) {});
 
 module.exports = router;
