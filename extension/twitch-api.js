@@ -89,6 +89,14 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         user = JSON.parse(body);
         users.insert(user);
+        var node = {
+          type: "user",
+          id: user._id,
+          username: channel.username
+        };
+        vres = socialGraph.addVertex({u: user._id, p: node});
+        if (vres.error) return console.error(vres.error);
+        nodes.insert(vres.result);
       });
     }
   }
