@@ -12,7 +12,6 @@ var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
 var Relationship  = entity.Relationship;
 
-
 var User = (function(superclass) {
   extend(User, superclass);
   function User(username) {
@@ -21,8 +20,7 @@ var User = (function(superclass) {
   return User;
 })(Entity);
 
-/*
-Channel = (function(superclass) {
+var Channel = (function(superclass) {
   extend(Channel, superclass);
   function Channel(username) {
     return User.__super__.constructor.apply(this, username, {username: username});
@@ -30,8 +28,7 @@ Channel = (function(superclass) {
   return Channel;
 })(Entity);
 
-//var collections = require('./collections');
-Event = (function(superClass) {  //var e = new Event(type, args);
+var Event = (function(superclass) {
   extend(Event, superClass);
   function Event(opts) {
     Event.__super__.constructor.apply(this, uuid.v4(), opts);
@@ -39,8 +36,8 @@ Event = (function(superClass) {  //var e = new Event(type, args);
   return Event;
 })(Entity);
 
-JoinEvent = (function(superClass) {
-  extend(JoinEvent, superClass);
+var JoinEvent = (function(superclass) {
+  extend(JoinEvent, superclass);
   function JoinEvent(channel, username) {
     this.eventType = "irc-join";
     return User.__super__.constructor.apply(this, {channel: channel, username: username});
@@ -48,15 +45,15 @@ JoinEvent = (function(superClass) {
   return JoinEvent;
 })(Event);
 
-PartEvent = (function(superClass) {
-  extend(PartEvent, superClass);s
+var PartEvent = (function(superclass) {
+  extend(PartEvent, superclass);
   function PartEvent(channel, username) {
     this.eventType = "irc-part";
     return User.__super__.constructor.apply(this, {channel: channel, username: username});
   }
   return PartEvent;
 })(Event);
-*/
+
 module.exports = function(emitter, username, secret, config) {
 /*
   this.started = new Date();
