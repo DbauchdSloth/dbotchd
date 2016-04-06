@@ -1,4 +1,4 @@
-var uuid    = require('uuid');
+var uuid = require('uuid');
 
 module.exports.Entity = (function() {
   function Entity(id, opts) {

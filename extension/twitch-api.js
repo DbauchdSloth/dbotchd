@@ -92,7 +92,7 @@ module.exports = function(emitter, username, secret, config) {
         channels.insert(channel);
         vres = socialGraph.addVertex(channel.toVertex());
         if (vres.error) return console.error(vres.error);
-        //entities.insert(vres.result);
+        entities.insert(vres.result);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -119,7 +119,7 @@ module.exports = function(emitter, username, secret, config) {
         users.insert(user);
         vres = socialGraph.addVertex(user.toVertex());
         if (vres.error) return console.error(vres.error);
-        //entities.insert(vres.result);
+        entities.insert(vres.result);
       });
     }
   }
