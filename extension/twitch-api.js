@@ -125,7 +125,8 @@ module.exports = function(emitter, username, secret, config) {
   }
 
   function onConnected(address, port) {
-    var event = new Event("irc-connected", {address: address, port: port});
+    var event = new Event({address: address, port: port});
+    even.eventType = "server-connected"; // FIXME: refactor Event constructor
     console.dir(event);
   }
 
