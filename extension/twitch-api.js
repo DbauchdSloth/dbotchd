@@ -35,7 +35,7 @@ module.exports = function(emitter, username, secret, config) {
   this.client = new irc.client(config);
 
   this.cacheChannel= function(name) {
-    var channel = channels.findObject({"name": name});
+    var channel = channels.findObject({"name": {"$eq": name}});
     if (!channel) {
       client.api({
         url: "https://api.twitch.tv/kraken/channels/" + name
@@ -59,8 +59,7 @@ module.exports = function(emitter, username, secret, config) {
   }
 
   this.cacheUser = function(name) {
-    var user;
-    user = users.findObject({"username": name});
+    var user = users.findObject({"username": {"$eq": name}});
     if (!user) {
       this.client.api({
         url: "https://api.twitch.tv/kraken/users/" + name
