@@ -12,12 +12,7 @@ function toObject() {
   return o;
 }
 
-function toJSON() {
-  return JSON.stringify(this.toObject());
-}
-
 module.exports.Entity = (function() {
-
   function Entity(id, opts) {
     this.id = id || uuid.v4();
     this.created = new Date();
@@ -33,9 +28,10 @@ module.exports.Entity = (function() {
     return v;
   }
   Entity.prototype.toObject = toObject;
-  Entity.prototype.toJSON = toJSON;
+  Entity.prototype.toJSON = function() { return JSON.stringify(this.toObject()) };
   return Entity;
 })();
+
 /*
 module.exports.Relationship = (function() {
   function Relationship(opts) {
@@ -64,5 +60,5 @@ module.exports.Relationship = (function() {
   Relationship.prototype.toObject = toObject;
   Relationship.prototype.toJSON = toJSON;
   return Relationship;
-  */
 })();
+  */
