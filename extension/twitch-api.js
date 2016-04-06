@@ -115,9 +115,7 @@ module.exports = function(emitter, username, secret, config) {
     var event = new JoinEvent(channel, user);
     events.insert(event);
     var user = users.findObject({"username": {"$eq": username}});
-    if (!user) {
-      cacheUser(user);
-    }
+    cacheUser(user);
   }
 
   function onPart(channel, username) {
@@ -128,29 +126,16 @@ module.exports = function(emitter, username, secret, config) {
   function onHosted(channel, user, viewers) {
     var ts = new Date();
     console.log("%s [%s] <%s> host %s", ts.toUTCString(), channel, user, viewers);
-    var event = {
-      created: ts.toUTCString(),
-      type: "hosted",
-      channel: channel,
-      username: user,
-      viewers: viewers
-    };
+    var event = new HostEvent(channel, user, viewers);
     events.insert(event);
-    if (!user) {
-      cacheUser(user);
-    }
+    cacheUser(user);
   }
 
   function onChat(channel, user, message, self) {
     var ts = new Date();
     console.log("%s [%s] <%s> %s", ts.toUTCString(), channel, user.username, message);
-    events.insert({
-      created: ts.toUTCString(),
-      type: "chat",
-      channel: channel,
-      username: user.username,
-      message: message
-    });
+    var event = new ChatEvent(channel, user.username, message);
+    events.insert(event);
     cacheUser(user.username);
     var commandPattern = new RegExp("^!\\w+");
     if (commandPattern.test(message)) {
@@ -162,13 +147,8 @@ module.exports = function(emitter, username, secret, config) {
   function onAction(channel, user, message, self) {
     var ts = new Date();
     console.log("%s [%s] <*%s> %s", ts.toUTCString(), channel, user.username, message);
-    events.insert({
-      created: ts.toUTCString(),
-      type: "action",
-      channel: channel,
-      user: user.username,
-      message: message
-    });
+    var event = new ActionEvent(channel, user.username, message);
+    events.insert(event);
     cacheUser(user.username);
     var commandPattern = new RegExp("^!\\w+");
     if (commandPattern.test(message)) {
