@@ -29,7 +29,7 @@ var Channel = (function(superclass) {
 })(Entity);
 
 var Event = (function(superclass) {
-  extend(Event, superClass);
+  extend(Event, superclass);
   function Event(opts) {
     Event.__super__.constructor.apply(this, uuid.v4(), opts);
   }
