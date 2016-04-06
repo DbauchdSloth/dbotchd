@@ -1,14 +1,13 @@
 var loki    = require('lokijs');
-var jsgraph = require('jsgraph');
 var irc     = require('tmi.js');
 var uuid    = require('uuid');
 var express = require('express');
 
 var util  = require('../src/util');
-//var digraph = require('../src/digraph');
+var digraph = require('../src/digraph');
 //var entity  = require('../src/entity');
 
-//var extend = util.extend;
+var extend = util.extend;
 //var DirectedGraph = digraph.DirectedGraph;
 //var Entity        = entity.Entity;
 //var Relationship  = entity.Relationship;

@@ -1,3 +1,5 @@
+var jsgraph = require('jsgraph');
+
 modules.export.DirectedGraph = (function() {
   function DirectedGraph(name) {
     var res = jsgraph.directed.create();
