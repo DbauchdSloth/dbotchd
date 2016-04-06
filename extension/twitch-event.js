@@ -4,7 +4,7 @@ const util = require('util');
 Event = (function(superclass) {
   util.inherits(Event, superclass);
   function Event(type, opts) {
-    return superclass.constructor.apply(this, [uuid.v4(), opts]);
+    return superclass.call(this, uuid.v4(), opts);
   }
   return Event;
 })(Entity);
@@ -12,7 +12,7 @@ Event = (function(superclass) {
 module.exports.JoinEvent = (function(superclass) {
   util.inherits(JoinEvent, superclass);
   function JoinEvent(channel, username) {
-    return superclass.constructor.apply(this, ["twitch-chanel-join", {channel: channel, username: username}]);
+    return superclass.call(this, "twitch-chanel-join", {channel: channel, username: username});
   }
   return JoinEvent;
 })(Event);
@@ -20,7 +20,7 @@ module.exports.JoinEvent = (function(superclass) {
 module.exports.PartEvent = (function(superclass) {
   util.inherits(PartEvent, superclass);
   function PartEvent(channel, username) {
-    return superclass.constructor.apply(this, ["twitch-chanel-part", {channel: channel, username: username}]);
+    return superclass.call(this, "twitch-chanel-part", {channel: channel, username: username});
   }
   return PartEvent;
 })(Event);
@@ -28,7 +28,7 @@ module.exports.PartEvent = (function(superclass) {
 module.exports.ChatEvent = (function(superclass) {
   util.inherits(ChatEvent, superclass);
   function ChatEvent(channel, username, message) {
-    return superclass.constructor.apply(this, ["twitch-channel-chat", {channel: channel, username: username, message:message}]);
+    return superclass.call(this, "twitch-channel-chat", {channel: channel, username: username, message:message});
   }
   return ChatEvent;
 })(Event);
@@ -36,7 +36,7 @@ module.exports.ChatEvent = (function(superclass) {
 module.exports.ActionEvent = (function(superclass) {
   util.inherits(ActionEvent, superclass);
   function ActionEvent(channel, username, message) {
-    return superclass.constructor.apply(this, ["twitch-channel-action", {channel: channel, username: username, message:message}]);
+    return superclass.call(this, "twitch-channel-action", {channel: channel, username: username, message:message});
   }
   return ActionEvent;
 })(Event);
@@ -44,7 +44,7 @@ module.exports.ActionEvent = (function(superclass) {
 module.exports.HostEvent = (function(superclass) {
   util.inherits(HostEvent, superclass);
   function HostEvent(channel, username, count) {
-    return superclass.constructor.apply(this, ["twitch-channel-host", {channel: channel, username: username, viewers:count}]);
+    return superclass.call(this, "twitch-channel-host", {channel: channel, username: username, viewers:count});
   }
   return HostEvent;
 })(Event);

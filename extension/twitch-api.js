@@ -23,7 +23,7 @@ console.dir(JoinEvent);
 var User = (function(superclass) {
   util.inherits(User, superclass);
   function User(username) {
-    return superclass.constructor.apply(this, username, {username: username});
+    return superclass.call(this, username, {username: username});
   }
   return User;
 })(Entity);
@@ -31,7 +31,7 @@ var User = (function(superclass) {
 var Channel = (function(superclass) {
   util.inherits(Channel, superclass);
   function Channel(username) {
-    return superclass.constructor.apply(this, username, {name: username});
+    return superclass.call(this, username, {name: username});
   }
   return Channel;
 })(Entity);
