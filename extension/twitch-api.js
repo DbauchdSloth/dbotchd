@@ -16,8 +16,7 @@ function Event(type, opts) {  //var e = new Event(type, args);
 
 var lokiConfig = {
   autosave: true,
-  autosaveInterval: 1000,
-  autoload: true
+  autosaveInterval: 1000
 };
 
 module.exports = function(emitter, username, secret, config) {
