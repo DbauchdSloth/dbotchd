@@ -112,8 +112,8 @@ module.exports = function(emitter, username, secret, config) {
   }
 
   function onJoin(channel, user) {
-    //var event = new JoinEvent(channel, user);
-    //events.insert(event);
+    var event = new JoinEvent(channel, user);
+    events.insert(event);
     var user = users.findObject({"username": {"$eq": username}});
     if (!user) {
       cacheUser(user);
@@ -122,7 +122,6 @@ module.exports = function(emitter, username, secret, config) {
 
   function onPart(channel, username) {
     var event = new PartEvent(channel, user);
-    console.dir(event.toObject());
     events.insert(event);
   };
 
