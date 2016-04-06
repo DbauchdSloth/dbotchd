@@ -12,6 +12,8 @@ DirectedGraph = digraph.DirectedGraph;
 Entity        = entity.Entity;
 Relationship  = entity.Relationship;
 
+/*
+
 User = (function(superclass) {
   extend(User, superClass);
   function User(username) {
@@ -221,7 +223,7 @@ module.exports = function(emitter, username, secret, config) {
   });
 
   // register new router for every new user identified so they get their own base loki file registered once
-
+*/
   this.connect = function() {
     this.client.connect();
   };
