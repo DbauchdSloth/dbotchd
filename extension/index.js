@@ -44,13 +44,13 @@ module.exports = function(nodecg) {
   };
 
   var twitch = twitchService(emitter, username, secret, twitchConfig);
-  twitch.connect();
   //var command = commmandDispatch(emitter, twitch);
 
   app.use('/api/', routes);
   //app.use('/twitch/,' twitch.router);
 
   app.on("mount", function(nodecg) {
+    twitch.connect();
     twitch.cacheUser(username);
   });
 
@@ -59,16 +59,7 @@ module.exports = function(nodecg) {
   var shutdown = function() {
     console.log("disconnecting from Twitch API");
     twitch.disconnect();
-    console.dir(app);
-    console.dir(nodecg);
-    server.close(function() {
-      console.log("Closed out remaining connections.");
-      process.exit()
-    });
-    setTimeout(function() {
-      console.error("Could not close connections in time, forcefully shutting down");
-      process.exit()
-    }, 10*1000);
+    // TODO: graceful shutdown.  LOok in to nodecg source to figure out how to get at server object
   }
   process.on ('SIGTERM', shutdown);
   process.on ('SIGINT', shutdown);
