@@ -14,14 +14,20 @@ function Event(type, opts) {  //var e = new Event(type, args);
   return this;
 }
 
+var lokiConfig = {
+  autosave: true,
+  autosaveInterval: 1000,
+  autoload: true
+};
+
 module.exports = function(emitter, username, secret, config) {
 
   var started = new Date();
 
-  var channeldb = new loki('db/twitch/channel.json');
+  var channeldb = new loki('twitch-channel.json', lokiConfig);
   var cahnnels  = channeldb.addCollection('channels');
 
-  var userdb = new loki('db/twitch/' + username + '/user.json', lokiConfig);
+  var userdb = new loki('twitch-' + username + '.json', lokiConfig);
   var users      = userdb.addCollection('users');
   var hosting    = userdb.addCollection('hosting');
   var follows    = userdb.addCollection('follow');
@@ -38,6 +44,7 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         channel = JSON.parse(body);
         channels.insert(channel);
+        console.dir(channel);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -56,12 +63,13 @@ module.exports = function(emitter, username, secret, config) {
     var user;
     user = users.findObject({"username": name});
     if (!user) {
-      client.api({
+      this.client.api({
         url: "https://api.twitch.tv/kraken/users/" + name
       }, function(err, res, body) {
         if (err) return console.error(err);
         user = JSON.parse(body);
         users.insert(user);
+        console.dir(user);
       });
       cacheChannel(name);
     }
@@ -94,17 +102,15 @@ module.exports = function(emitter, username, secret, config) {
 
   function onPart(channel, user) {
     var ts = new Date();
-    console.log("%s [%s] <%s> part", ts.toUTCString(), channel, user.username);
+    console.log("%s [%s] <%s> part", ts.toUTCString(), channel, user);
     var event = {
       created: ts.toUTCString(),
       type: "part",
       channel: channel,
-      username: user.username
+      username: user
     };
     events.insert(event);
   };
-
-  function = isExis
 
   function onHosted(channel, user, viewers) {
     var ts = new Date();
@@ -151,12 +157,16 @@ module.exports = function(emitter, username, secret, config) {
     cacheUser(user.username);
   };
 
-  client.on("connected", onConnected);
-  client.on("join", onJoin);
-  client.on("part", onPart);
-  client.on("hosted", onHosted);
-  client.on("chat", onChat);
-  client.on("action", onAction);
+  this.say = function(channel, message) {
+    this.client.say(channel, message);
+  }
+
+  this.client.on("connected", onConnected);
+  this.client.on("join", onJoin);
+  this.client.on("part", onPart);
+  this.client.on("hosted", onHosted);
+  this.client.on("chat", onChat);
+  this.client.on("action", onAction);
 
   emitter.on('cache-user', this.cacheUser);
   emitter.on('cache-channel', this.cacheChannel);
@@ -176,6 +186,8 @@ module.exports = function(emitter, username, secret, config) {
     cacheChannel(req.params.name);
     return res.json(follows.find());
   });
+
+  this.client.connect();
 
   return this;
 };
