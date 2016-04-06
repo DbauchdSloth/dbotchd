@@ -1,8 +1,6 @@
 var loki = require('lokijs');
 var irc  = require('tmi.js');
 var uuid = require('uuid');
-var collections = require('./collections');
-
 var express = require('express');
 
 //var collections = require('./collections');
@@ -29,7 +27,7 @@ module.exports = function(emitter, username, secret, config) {
   var follows    = userdb.addCollection('follow');
   var events     = userdb.addCollection('event');
 
-  var client = new irc.client(config);
+  this.client = new irc.client(config);
 
   this.cacheChannel= function(name) {
     var channel = channels.findObject({"name": name});
@@ -136,7 +134,7 @@ module.exports = function(emitter, username, secret, config) {
     var commandPattern = new RegExp("^!\\w+");
     if (commandPattern.test(message)) {
       var command = commandPattern.exec(message);
-      emitter.emit("dispatch-command", command, user.username, message);
+      emitter.emit("command-dispatch", command, user.username, message);
     }
   }
 
@@ -152,36 +150,6 @@ module.exports = function(emitter, username, secret, config) {
     });
     cacheUser(user.username);
   };
-
-  emitter.on('dispatch-command', function(command, user, message) {
-    var ts = new Date();
-    var event = {
-      created: ts.toUTCString(),
-      type: "dispatch-command",
-      channel: "#" + username,
-      command: command,
-      username: user.username,
-      message: message
-    };
-    events.insert(event);
-    //if (isDev()) console.dir(event);
-    if (command == "!ut") {
-      // TODO: show uptime of current video if running, and total uptime last 24 hours
-      client.action("#" + username,
-        "bot has been running since " + started.toUTCString());
-    }
-    if (command == "!so") {
-      var argPattern = RegExp("^(!\\w+)\\s+(\\w+)");
-      if (!argPattern.test(message)) {
-        client.action("#" + username,
-          "You had one job, %s", user);
-      }
-      match = argPattern.exec(message);
-      var streamer = match[1];
-      client.action("#" + username,
-        "Please give %s a follow at %s and say hi for me!", streamer, "twitch.tv/" + streamer);
-    }
-  });
 
   client.on("connected", onConnected);
   client.on("join", onJoin);
@@ -208,10 +176,6 @@ module.exports = function(emitter, username, secret, config) {
     cacheChannel(req.params.name);
     return res.json(follows.find());
   });
-
-  this.connect = function() {
-    client.connect();
-  }
 
   return this;
 };

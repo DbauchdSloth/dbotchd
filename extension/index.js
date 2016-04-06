@@ -5,9 +5,9 @@ const util = require('util');
 var express = require('express');
 var uuid = require('uuid');
 
-var routes        = require('./routes');
-var collections   = require('./collections');
-var twitchService = require('./twitch-api');
+var routes           = require('./routes');
+var commmandDispatch = require('./commands');
+var twitchService    = require('./twitch-api');
 
 app = express();
 
@@ -22,8 +22,6 @@ function isDev() {
 }
 
 module.exports = function(nodecg) {
-
-  var db = collections();
 
   // process arguments;
   var username = argv.u ? argv.u : "default";
@@ -46,6 +44,7 @@ module.exports = function(nodecg) {
   };
 
   var twitch = twitchService(emitter, username, secret, twitchConfig);
+  var command = commmandDispatch(emitter, twitch);
 
   app.use('/', routes);
   app.use('/api/,' twitch.router);
