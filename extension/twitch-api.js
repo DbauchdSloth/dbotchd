@@ -89,7 +89,7 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         var tchannel = JSON.parse(body);
         var channel = new Channel(username);
-        channels.insert(channel.toJSON());
+        channels.insert(channel);
         //vres = socialGraph.addVertex(channel.toVertex());
         //if (vres.error) return console.error(vres.error);
         //entities.insert(vres.result);
@@ -116,7 +116,7 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         var tuser = JSON.parse(body);
         var user = new User(tuser.username);
-        users.insert(user.toJSON());
+        users.insert(user);
         //vres = socialGraph.addVertex(user.toVertex());
         //if (vres.error) return console.error(vres.error);
         //entities.insert(vres.result);
