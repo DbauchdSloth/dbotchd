@@ -1,4 +1,5 @@
 module.exports.Entity = (function() {
+  /*
   function Entity(id, opts) {
     this.id = id;
     this.created = new Date();
@@ -17,8 +18,9 @@ module.exports.Entity = (function() {
     };
   }
   return Entity;
+  */
 })();
-
+/*
 module.exports.Relationship = (function() {
   function Relationship(opts) {
     if (!opts.subject || !opts.predicate)
@@ -40,3 +42,4 @@ module.exports.Relationship = (function() {
   }
   return Relationship;
 })();
+*/
