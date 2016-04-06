@@ -21,7 +21,6 @@ module.exports.Entity = (function() {
 
 module.exports.Relationship = (function() {
   function Relationship(opts) {
-    /*
     if (!opts.subject || !opts.predicate)
       return console.log("missing one or more required options");
     this.created = new Date();

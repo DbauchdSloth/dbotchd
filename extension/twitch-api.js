@@ -10,7 +10,7 @@ var entity  = require('../src/entity');
 var extend = util.extend;
 var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
-//var Relationship  = entity.Relationship;
+var Relationship  = entity.Relationship;
 
 /*
 
