@@ -1,4 +1,5 @@
 var loki = require('lokijs');
+var jsgraph = require('jsgraph');
 var irc  = require('tmi.js');
 var uuid = require('uuid');
 var express = require('express');
@@ -14,14 +15,27 @@ function Event(type, opts) {  //var e = new Event(type, args);
   return this;
 }
 
-var lokiConfig = {
-  autosave: true,
-  autosaveInterval: 1000
-};
+function DirectedGraph(name) {
+  var res = jsgraph.directed.create();
+  if (res.error) return console.error(res.error);
+  var graph = res.result;
+  graph.name = name;
+  return graph;
+}
 
 module.exports = function(emitter, username, secret, config) {
 
-  var started = new Date();
+  this.started = new Date();
+
+  var socialdb = new loki('twitch-' + username + '-social-graph.json')
+  var nodes = socialdb.addCollection('nodes');
+  var edges = socialdb.addCollection('edges');
+  var socialGraph = new DirectedGraph("twitch-social");
+
+  var lokiConfig = {
+    autosave: true,
+    autosaveInterval: 1000
+  };
 
   var channeldb = new loki('twitch-channel.json', lokiConfig);
   var channels  = channeldb.addCollection('channels');
@@ -35,16 +49,40 @@ module.exports = function(emitter, username, secret, config) {
   this.client = new irc.client(config);
 
   this.cacheChannel= function(name) {
-    var channel = channels.findObject({"name": {"$eq": name}});
-    if (!channel) {
+    //var channel = channels.findObject({"name": {"$eq": name}});
+    if (!channel) { // always cache channels for now
       client.api({
         url: "https://api.twitch.tv/kraken/channels/" + name
       }, function(err, res, body) {
         if (err) return console.error(err);
         channel = JSON.parse(body);
         channels.insert(channel);
-        //console.dir(channel);
-      });
+        var node = {
+          type: "channel",
+          created: channel.created_at,
+          updated: channel.updated_at,
+          mature: channel.mature,
+          status: channel.status,
+          displayName: channel.displayName,
+          game: channel.game,
+          id: channel._id,
+          name: channel.name,
+          media: [
+            { image { name: "logo", href: channel.logo} },
+            { image { name: "banner", href: channel.banner} },
+            { image { name: "video-banner", href: channel.video_banner} },
+            { image { name: "profile-banner", href: channel.profile_banner} }
+          ],
+          stats: [
+            { name: "follow-count", value: channel.followers },
+            { name: "view-count", value: channel.views },
+          ]
+        }});
+        if (vres.error) return console.error(vres.error);
+        var vres = socialGraph.addVertex({u: channel.id, p: node);
+        if (vres.error) return console.error(res.error);
+        nodes.insert(vres.result);
+      }
       cacheChannelHosting(name);
       cacheChannelFollows(name);
     }
@@ -67,9 +105,17 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         user = JSON.parse(body);
         users.insert(user);
-        //console.dir(user);
+        var node =  {
+          type: "user",
+          created: user.created_at,
+          updated: user.updated_at,
+          id: user._id,
+          username: user.username
+        };
+        var vres = socialGraph.addVertex({u: user.id, p: node);
+        if (vres.error) return console.error(vres.error);
+        nodes.insert(vres.result);
       });
-      //cacheChannel(name);
     }
   }
 
@@ -172,7 +218,6 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
 
   this.router = express.Router();
-  /*
   this.router.get('/channel/:name', function(req, res) {
     cacheChannel(req.params.name);
     return res.json(channels.find({"name": req.params.name}));
@@ -185,9 +230,16 @@ module.exports = function(emitter, username, secret, config) {
     cacheChannel(req.params.name);
     return res.json(follows.find());
   });
-  */
 
-  this.client.connect();
+  // register new router for every new user identified so they get their own base loki file registered once
+
+  this.connect = function() {
+    this.client.connect();
+  }
+
+  this.disconnect = function() {
+    this.client.disconnect();
+  };
 
   return this;
 };

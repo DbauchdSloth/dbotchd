@@ -44,6 +44,7 @@ module.exports = function(nodecg) {
   };
 
   var twitch = twitchService(emitter, username, secret, twitchConfig);
+  twitch.connect();
   //var command = commmandDispatch(emitter, twitch);
 
   app.use('/api/', routes);
@@ -54,5 +55,20 @@ module.exports = function(nodecg) {
   app.on("mount", function(nodecg) {
     twitch.cacheUser(username);
   });
+
+  var shutdown = function() {
+    console.log("disconnecting from Twitch API");
+    twitch.disconnect();
+    server.close(function() {
+      console.log("Closed out remaining connections.");
+      process.exit()
+    });
+    setTimeout(function() {
+      console.error("Could not close connections in time, forcefully shutting down");
+      process.exit()
+    }, 10*1000);
+  }
+  process.on ('SIGTERM', shutdown);
+  process.on ('SIGINT', shutdown);
 
 }
