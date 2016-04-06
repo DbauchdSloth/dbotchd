@@ -1,6 +1,6 @@
 var jsgraph = require('jsgraph');
 
-module.export.DirectedGraph = (function() {
+module.exports.DirectedGraph = (function() {
   function DirectedGraph(name) {
     var res = jsgraph.directed.create();
     if (res.error) return console.error(res.error);
