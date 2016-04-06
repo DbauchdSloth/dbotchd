@@ -234,7 +234,7 @@ module.exports = function(emitter, username, secret, config) {
 
   this.connect = function() {
     this.client.connect();
-  }
+  };
 
   this.disconnect = function() {
     this.client.disconnect();
