@@ -9,7 +9,7 @@ const entity  = require('../src/entity');
 
 var DirectedGraph = digraph.DirectedGraph;
 var Entity        = entity.Entity;
-var Relationship  = entity.Relationship;
+//var Relationship  = entity.Relationship;
 
 var twitchEvent = require('./twitch-event');
 var JoinEvent   = twitchEvent.JoinEvent;
@@ -17,6 +17,8 @@ var PartEvent   = twitchEvent.PartEvent;
 var HostEvent   = twitchEvent.HostEvent;
 var ChatEvent   = twitchEvent.ChatEvent;
 var ActionEvent = twitchEvent.ActionEvent;
+
+console.dir(JoinEvent);
 
 var User = (function(superclass) {
   util.inherits(User, superclass);
@@ -110,8 +112,8 @@ module.exports = function(emitter, username, secret, config) {
   }
 
   function onJoin(channel, user) {
-    var event = new JoinEvent(channel, user);
-    events.insert(event);
+    //var event = new JoinEvent(channel, user);
+    //events.insert(event);
     var user = users.findObject({"username": {"$eq": username}});
     if (!user) {
       cacheUser(user);
