@@ -27,10 +27,10 @@ module.exports = function(emitter, username, secret, config) {
 
   this.started = new Date();
 
-  var socialdb = new loki('twitch-' + username + '-social-graph.json')
+  var socialdb = new loki('twitch-' + username + '-social-graph.json');
   var nodes = socialdb.addCollection('nodes');
   var edges = socialdb.addCollection('edges');
-  var socialGraph = new DirectedGraph("twitch-social");
+  var socialGraph = new DirectedGraph("twitch-" + username + "-social");
 
   var lokiConfig = {
     autosave: true,
