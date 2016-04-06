@@ -1,6 +1,6 @@
 module.exports = function(emitter, twitch) {
 
-  function onCommandDispatch = function(command, username, content) {
+  function onCommandDispatch(command, username, content) {
     if (command === "!ut") {
       // TODO: show uptime of current video if running, and total uptime last 24 hours
       twitch.client.action("#" + username,

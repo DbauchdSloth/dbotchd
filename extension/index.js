@@ -47,7 +47,7 @@ module.exports = function(nodecg) {
   //var command = commmandDispatch(emitter, twitch);
 
   app.use('/api/', routes);
-  app.use('/twitch/,' twitch.router);
+  //app.use('/twitch/,' twitch.router);
 
   nodecg.mount(app);
 

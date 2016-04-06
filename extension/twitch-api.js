@@ -43,7 +43,7 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         channel = JSON.parse(body);
         channels.insert(channel);
-        console.dir(channel);
+        //console.dir(channel);
       });
       cacheChannelHosting(name);
       cacheChannelFollows(name);
@@ -67,9 +67,9 @@ module.exports = function(emitter, username, secret, config) {
         if (err) return console.error(err);
         user = JSON.parse(body);
         users.insert(user);
-        console.dir(user);
+        //console.dir(user);
       });
-      cacheChannel(name);
+      //cacheChannel(name);
     }
   }
 
@@ -172,6 +172,7 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
 
   this.router = express.Router();
+  /*
   this.router.get('/channel/:name', function(req, res) {
     cacheChannel(req.params.name);
     return res.json(channels.find({"name": req.params.name}));
@@ -184,6 +185,7 @@ module.exports = function(emitter, username, secret, config) {
     cacheChannel(req.params.name);
     return res.json(follows.find());
   });
+  */
 
   this.client.connect();
 
