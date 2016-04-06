@@ -50,16 +50,17 @@ module.exports = function(nodecg) {
   app.use('/api/', routes);
   //app.use('/twitch/,' twitch.router);
 
-  nodecg.mount(app);
-
   app.on("mount", function(nodecg) {
     twitch.cacheUser(username);
   });
+
+  nodecg.mount(app);
 
   var shutdown = function() {
     console.log("disconnecting from Twitch API");
     twitch.disconnect();
     console.dir(app);
+    console.dir(nodecg);
     server.close(function() {
       console.log("Closed out remaining connections.");
       process.exit()

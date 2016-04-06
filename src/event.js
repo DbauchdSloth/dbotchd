@@ -1,4 +1,5 @@
 var Entity = require('./entity').Entity;
+var uuid = require('uuid');
 const util = require('util');
 
 module.exports.Event = (function(superclass) {
