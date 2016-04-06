@@ -87,7 +87,7 @@ module.exports = function(emitter, username, secret, config) {
         url: "https://api.twitch.tv/kraken/channels/" + name
       }, function(err, res, body) {
         if (err) return console.error(err);
-        vat tchannel = JSON.parse(body);
+        var tchannel = JSON.parse(body);
         var channel = new Channel(username);
         channels.insert(channel.toJSON());
         //vres = socialGraph.addVertex(channel.toVertex());
