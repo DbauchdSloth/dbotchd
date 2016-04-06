@@ -92,7 +92,7 @@ module.exports = function(emitter, username, secret, config) {
         var node = {
           type: "user",
           id: user._id,
-          username: channel.username
+          username: user.username
         };
         vres = socialGraph.addVertex({u: user._id, p: node});
         if (vres.error) return console.error(vres.error);
