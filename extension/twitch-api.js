@@ -5,7 +5,7 @@ var express = require('express');
 
 var util  = require('../src/util');
 var digraph = require('../src/digraph');
-//var entity  = require('../src/entity');
+var entity  = require('../src/entity');
 
 var extend = util.extend;
 //var DirectedGraph = digraph.DirectedGraph;
