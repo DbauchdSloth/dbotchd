@@ -198,9 +198,5 @@ module.exports = function(emitter, username, secret, config) {
     this.client.connect();
   };
 
-  this.disconnect = function() {
-    this.client.disconnect();
-  };
-
   return this;
 };
