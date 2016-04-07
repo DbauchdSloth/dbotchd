@@ -45,6 +45,8 @@ module.exports = function(emitter, username, secret, config) {
     autosaveInterval: 1000
   };
 
+  // TODO: encapsulate collection configuration and init in twitch-collection.js
+
   var channeldb = new loki('twitch-channel.json', lokiConfig);
   var channels  = channeldb.addCollection('channels');
 
@@ -119,7 +121,7 @@ module.exports = function(emitter, username, secret, config) {
   }
 
   function onPart(channel, username) {
-    var event = new PartEvent(channel, user);
+    var event = new PartEvent(channel, username);
     events.insert(event);
   };
 
@@ -175,7 +177,7 @@ module.exports = function(emitter, username, secret, config) {
   emitter.on('cache-channel-follows', this.cacheChannelFollows);
 
   this.router = express.Router();
-  
+
   /*
   this.router.get('/channel/:name', function(req, res) {
     cacheChannel(req.params.name);
