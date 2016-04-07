@@ -26,3 +26,23 @@ module.exports.Entity = (function() {
   Entity.prototype.toJSON = function() { return JSON.stringify(this.toObject()); };
   return Entity;
 })();
+/*
+module.exports.Relationship = (function() {
+  function Relationship(opts) {
+    this.created = new Date();
+    this.subject = opts.subject || return console.error(new Error("missing subject"));
+    this.predicate = opts.predicate || return console.error(new Error("missing predicate"));
+    for (var key in opts) {
+      this[key] = opts[key];
+    }
+  }
+  Relationship.prototype.toEdge = function() {
+    var p = {};
+    Object.getOwnPropertyNames(this).forEach(function(key) { p.key = this[key]; });
+    return {e: {u: this.subject, v: this.predicate}, p: p};
+  }
+  Relationship.prototype.toObject = toObject;
+  Relationship.prototype.toJSON = function() { return JSON.stringify(this.toObject()); };
+  return Relationship;
+})();
+*/
